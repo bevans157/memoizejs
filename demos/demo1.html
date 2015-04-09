@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Memoize Dev Scratch Pad</title>
+    <script src="../memoize.js"></script>
+    <script>
+        count= 0;
+
+        function getFullURL(link) {
+            var parser = document.createElement('a');
+            parser.href = link;
+            count++;
+            return parser.href+count;
+        };
+
+
+        function callCache(val) {
+
+        };
+
+    </script>
+    <style>
+        button {
+            heigh:40px;
+            margin:10px;
+        }
+        #cachelist{
+            height:100px;
+            width:300px;
+            border:1px solid black;
+        }
+
+    </style>
+</head>
+<body>
+
+Simple page to test and demonstrate a library for memoization of javascript function calls (also supports cache integration support)
+
+
+
+<script>
+link = '../memoize.js'
+    document.write( getFullURL(link) );
+    document.write('<br/>');
+    document.write( getFullURL(link) );
+    document.write('<br/>');
+    document.write( getFullURL(link) );
+    document.write('<br/>');
+    document.write( getFullURL(link) );
+    document.write('<br/>');
+    document.write( memoize(getFullURL, [link] ) );
+    document.write('<br/>');
+    document.write( memoize(getFullURL, [link] ) );
+    document.write('<br/>');
+    document.write( memoize(getFullURL, [link] ) );
+    document.write('<br/>');
+
+
+
+</script>
+
+<form>
+
+<button onclick="callCache(1);">PRESS 1</button>
+<button onclick="callCache(2);">PRESS 2</button>
+<button onclick="callCache(3);">PRESS 3</button>
+<button onclick="callCache(4);">PRESS 4</button>
+<button onclick="callCache(5);">PRESS 5</button>
+<button onclick="callCache(6);">PRESS 6</button>
+<button onclick="callCache(7);">PRESS 7</button>
+<button onclick="callCache(8);">PRESS 8</button>
+<button onclick="callCache(9);">PRESS 9</button>
+<button onclick="callCache(10);">PRESS 10</button>
+<button onclick="callCache(11);">PRESS 11</button>
+<button onclick="callCache(12);">PRESS 12</button>
+<button onclick="callCache(13);">PRESS 13</button>
+<button onclick="callCache(14);">PRESS 14</button>
+<button onclick="callCache(15);">PRESS 15</button>
+<button onclick="callCache(16);">PRESS 16</button>
+<button onclick="callCache(17);">PRESS 17</button>
+<button onclick="callCache(18);">PRESS 18</button>
+<button onclick="callCache(19);">PRESS 19</button>
+<button onclick="callCache(20);">PRESS 20</button>
+
+</form>
+
+<div id="cachelist">
+
+</div>
+
+</body>
+</html>
