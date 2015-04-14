@@ -14,10 +14,10 @@
     //===============
     // Top-level vars
     //===============
-    var cacheMode = 'MEMORY'; // Defualt 'MEMORY', added to allow expansion to include 'WEB' for web storage
+    var cacheMode = 'LOCALSTORAGE'; // Defualt 'MEMORY', other values LOCALSTORAGE
     var cacheLimit = 1000; // Number of entries allowed in the cache (must be greater than 2
     var cache = {};
-    var defaultTTL = 24*60*60*1000; // 24 hours
+    var defaultTTL = 2*60*60*1000; // 2 hours
 
     //==========
     // Utilities
@@ -151,9 +151,9 @@
 
 
 
-    //======
-    // Cache
-    //======
+    //=============
+    // Cache Memory
+    //=============
 
     //
     // Sort cache keys by age
@@ -174,6 +174,7 @@
     //
     // Set cache value
     function setCache(key, val){
+        cacheGetStorage();
         var d = new Date();
         var cacheSize = Object.keys(cache).length;
         if (cacheSize > cacheLimit) {
@@ -190,11 +191,13 @@
             'value':val,
             'age':d.getTime()
         };
+        cacheSetStorage();
     }
 
     //
     // Check cache
     function checkCache(key, ttl){
+        cacheGetStorage();
         var d = new Date();
         if (!ttl) {ttl = d.getTime();}
         if (cache[key] && cache[key]['age'] && cache[key]['age'] > (d.getTime()-ttl) ) {
@@ -206,6 +209,7 @@
     //
     // Get cache
     function getCache(key, ttl){
+        cacheGetStorage();
         var d = new Date();
         if (!ttl) {ttl = d.getTime();}
         if (cache[key] && cache[key]['age'] && cache[key]['age'] > (d.getTime()-ttl) ) {
@@ -213,6 +217,40 @@
         }
         return false;
     }
+
+    //
+    // Get cache
+    function cacheGetStorage() {
+        if (cacheMode == 'MEMORY'){
+            // Do Nothing
+        }
+        if (cacheMode == 'LOCALSTORAGE'){
+            try {
+                cache = JSON.parse(window.localStorage.getItem("memoizejs"));
+                if (!(typeof cache === 'object')){
+                    cache = {}
+                }
+            }
+            catch (e){
+                cache = {}
+            }
+        }
+    }
+
+
+    function cacheSetStorage() {
+        if (cacheMode == 'MEMORY'){
+            // Do Nothing
+        }
+        if (cacheMode == 'LOCALSTORAGE'){
+            window.localStorage.setItem("memoizejs", JSON.stringify(cache));
+        }
+    }
+
+
+
+
+
 
 
 })(this);
